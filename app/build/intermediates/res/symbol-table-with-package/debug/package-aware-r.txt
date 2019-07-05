@@ -1061,7 +1061,6 @@ id barrier
 id beginning
 id blocking
 id bottom
-id btnCancelTweet
 id btnCompose
 id btnSendTweet
 id buttonPanel

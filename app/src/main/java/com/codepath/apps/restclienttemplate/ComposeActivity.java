@@ -6,12 +6,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.codepath.apps.restclienttemplate.models.Tweet;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import javax.annotation.Nullable;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -21,6 +24,7 @@ public class ComposeActivity extends AppCompatActivity {
 
     EditText mTweetText;
     Button mSendButton;
+    Button mCancelButton;
     TwitterClient client;
 
     @Override
@@ -36,10 +40,11 @@ public class ComposeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String tweet = mTweetText.getText().toString();
-                sendTweet(tweet);
-                finish();
+
+                publishTweet(tweet);
             }
         });
+
 
 
     }
@@ -70,6 +75,17 @@ public class ComposeActivity extends AppCompatActivity {
             });
 
     }
+
+    public void publishTweet(@Nullable String text){
+        if (text.isEmpty()){
+            Toast.makeText(this, "Text box is empty, try typing something", Toast.LENGTH_LONG).show();
+        }
+        else{
+            sendTweet(text);
+            finish();
+        }
+    }
+
 }
 
 

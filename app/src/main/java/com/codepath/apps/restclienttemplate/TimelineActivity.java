@@ -25,10 +25,10 @@ import cz.msebera.android.httpclient.Header;
 //This activity shows a user's tweets
 public class TimelineActivity extends AppCompatActivity {
 
-    private TwitterClient client;
-    TweetAdapter tweetAdapter;
+    private TwitterClient mClient;
+    TweetAdapter mTweetAdapter;
     ArrayList<Tweet> tweets;
-    RecyclerView rvTweets;
+    RecyclerView mRecyclerViewTweets;
     FloatingActionButton mButtonCompose;
     public static final int  REQUEST_CODE = 100;
 
@@ -37,22 +37,22 @@ public class TimelineActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline);
-        client = TwitterApp.getRestClient(this);
+        mClient = TwitterApp.getRestClient(this);
 
         //find the RecyclerView
-        rvTweets = (RecyclerView) findViewById(R.id.rvTweet);
+        mRecyclerViewTweets = (RecyclerView) findViewById(R.id.rvTweet);
 
         //init the ArrayList (data source)
         tweets = new ArrayList<>();
 
         //construct the adapter from this data source
-        tweetAdapter = new TweetAdapter(tweets);
+        mTweetAdapter = new TweetAdapter(tweets);
 
         //RecyclerView setup (layout manager, use adapter)
-        rvTweets.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerViewTweets.setLayoutManager(new LinearLayoutManager(this));
 
         //set the adapter
-        rvTweets.setAdapter(tweetAdapter);
+        mRecyclerViewTweets.setAdapter(mTweetAdapter);
 
         mButtonCompose = findViewById(R.id.btnCompose);
 
@@ -64,7 +64,7 @@ public class TimelineActivity extends AppCompatActivity {
 
     public void populateTimeline (){
         //network request to retrieve data from API
-        client.getHomeTimeline(new JsonHttpResponseHandler(){
+        mClient.getHomeTimeline(new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
                 //Log.d("TwitterClient", response.toString());
@@ -77,7 +77,7 @@ public class TimelineActivity extends AppCompatActivity {
                     try {
                         Tweet tweet = Tweet.fromJSON(response.getJSONObject(i));
                         tweets.add(tweet);
-                        tweetAdapter.notifyItemInserted(tweets.size() -1);
+                        mTweetAdapter.notifyItemInserted(tweets.size() -1);
 
                     }catch (JSONException e ){
                         e.printStackTrace();
@@ -139,8 +139,8 @@ public class TimelineActivity extends AppCompatActivity {
         //if (resultCode==RESULT_OK && requestCode == REQUEST_CODE){
             Tweet tweet = (Tweet) data.getSerializableExtra("text");
             tweets.add(0,tweet);
-            tweetAdapter.notifyItemInserted(0);
-            rvTweets.scrollToPosition(0);
+            mTweetAdapter.notifyItemInserted(0);
+            mRecyclerViewTweets.scrollToPosition(0);
         //}
     }
 
