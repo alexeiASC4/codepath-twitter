@@ -25,11 +25,12 @@ import cz.msebera.android.httpclient.Header;
 //This activity shows a user's tweets
 public class TimelineActivity extends AppCompatActivity {
 
-    TwitterClient client;
+    private TwitterClient client;
     TweetAdapter tweetAdapter;
     ArrayList<Tweet> tweets;
     RecyclerView rvTweets;
     FloatingActionButton mButtonCompose;
+    public static final int  REQUEST_CODE = 100;
 
 
     @Override
@@ -134,13 +135,13 @@ public class TimelineActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode==RESULT_OK){
+        //super.onActivityResult(requestCode, resultCode, data);
+        //if (resultCode==RESULT_OK && requestCode == REQUEST_CODE){
             Tweet tweet = (Tweet) data.getSerializableExtra("text");
             tweets.add(0,tweet);
             tweetAdapter.notifyItemInserted(0);
             rvTweets.scrollToPosition(0);
-        }
+        //}
     }
 
     private void launchComposeView(){
@@ -148,4 +149,5 @@ public class TimelineActivity extends AppCompatActivity {
         startActivityForResult(i, 100);
 
     }
+
 }

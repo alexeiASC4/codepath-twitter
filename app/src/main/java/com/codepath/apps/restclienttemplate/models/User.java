@@ -2,10 +2,11 @@ package com.codepath.apps.restclienttemplate.models;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.parceler.Parcel;
 
-@Parcel
-public class User {
+import java.io.Serializable;
+
+
+public class User implements Serializable {
     //list the attributes
     public String name;
     public long uid;
